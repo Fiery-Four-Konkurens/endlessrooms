@@ -15,7 +15,6 @@ void GameScene::input_event(const Ref<InputEvent> &p_event) {
 
 void GameScene::update(float p_delta) {
 	elapsed_seconds += AppWindow::get_singleton()->get_delta();
-	RLogger::print_message(String::num(AppWindow::get_singleton()->get_delta());
 }
 
 void GameScene::render() {
