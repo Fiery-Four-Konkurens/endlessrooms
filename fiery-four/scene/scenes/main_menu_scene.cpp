@@ -3,10 +3,27 @@
 
 MainMenuScene::MainMenuScene(SceneManager &p_scene_manager) :
 		scene_manager(p_scene_manager) {
+	Ref<Image> image;
+	image.instance();
+
+	image->load_from_file("assets/wallpaper/wallpaper01_rgba.png");
+
+	background.instance();
+	background->create_from_image(image);
 }
 
 void MainMenuScene::render() {
-	Renderer::get_singleton()->clear_screen(Color(0.08f, 0.08f, 0.12f));
+	Renderer *renderer = Renderer::get_singleton();
+
+	renderer->clear_screen(Color(0, 0, 0, 1));
+	renderer->camera_2d_projection_set_to_window();
+
+	glDisable(GL_FRAMEBUFFER_SRGB);
+
+	renderer->draw_texture(
+		background,
+		Rect2(0, 0, 1920, 1080)
+	);
 
 	GUI::new_frame();
 

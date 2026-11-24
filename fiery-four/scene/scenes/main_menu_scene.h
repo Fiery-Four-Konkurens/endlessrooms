@@ -14,6 +14,7 @@ public:
 
 private:
 	SceneManager &scene_manager;
+	Ref<Texture> background;
 };
 
 #endif
