@@ -1,18 +1,19 @@
 #!/bin/sh
 
-echo "Compiling & starting game for Linux..."
+echo "Compiling for Linux..."
 
 cp -u ../tools/merger/out/full/sfw.h sfw.h
 cp -u ../tools/merger/out/full/sfw.cpp sfw.cpp
 cp -u ../tools/merger/out/full/sfw_3rd.m sfw_3rd.m
 
-ccache g++ -Wall -g -c sfw.cpp -o sfw.o
-ccache g++ -Wall -g -c main_menu_scene.cpp -o main_menu_scene.o
-ccache g++ -Wall -g -c game_scene.cpp -o game_scene.o
-ccache g++ -Wall -g -c pause_menu_scene.cpp -o pause_menu_scene.o
-ccache g++ -Wall -g -c game_over_scene.cpp -o game_over_scene.o
-ccache g++ -Wall -g -c main.cpp -o main.o
+mkdir -p build
 
-ccache g++ -Wall -static-libgcc -static-libstdc++ -g sfw.o main_menu_scene.o game_scene.o pause_menu_scene.o game_over_scene.o main.o -lX11 -o game
+ccache g++ -Wall -g -c sfw.cpp -o ./build/sfw.o
+ccache g++ -Wall -g -c ./scene/scenes/main_menu_scene.cpp -o ./build/main_menu_scene.o
+ccache g++ -Wall -g -c ./scene/scenes/game_scene.cpp -o ./build/game_scene.o
+ccache g++ -Wall -g -c ./scene/scenes/pause_menu_scene.cpp -o ./build/pause_menu_scene.o
+ccache g++ -Wall -g -c ./scene/scenes/game_over_scene.cpp -o ./build/game_over_scene.o
+ccache g++ -Wall -g -c main.cpp -o ./build/main.o
 
-./game
+ccache g++ -Wall -static-libgcc -static-libstdc++ -g ./build/sfw.o ./build/main_menu_scene.o ./build/game_scene.o ./build/pause_menu_scene.o ./build/game_over_scene.o ./build/main.o -lX11 -o game
+

@@ -1,7 +1,7 @@
 #ifndef GAME_SCENE_H
 #define GAME_SCENE_H
 
-#include "scene_manager.h"
+#include "../scene_manager.h"
 
 class GameScene : public Scene {
 	SFW_OBJECT(GameScene, Scene);

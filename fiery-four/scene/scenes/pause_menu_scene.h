@@ -1,7 +1,7 @@
 #ifndef PAUSE_MENU_SCENE_H
 #define PAUSE_MENU_SCENE_H
 
-#include "scene_manager.h"
+#include "../scene_manager.h"
 
 class PauseMenuScene : public Scene {
 	SFW_OBJECT(PauseMenuScene, Scene);

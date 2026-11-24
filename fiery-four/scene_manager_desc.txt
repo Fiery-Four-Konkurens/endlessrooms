@@ -5,4 +5,3 @@ A game_application update, render és input_event függvényei továbbítják a 
  mely az aktuális scene megfelelő függvényét hívja meg
 
 pause menünél egy külön Ref<Scene> megtarthatja a game_scene-t és az állapotát meaning nem veszik el a progress
-(it's just theory, some real testing needed)

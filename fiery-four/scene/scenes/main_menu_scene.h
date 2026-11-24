@@ -1,7 +1,7 @@
 #ifndef MAIN_MENU_SCENE_H
 #define MAIN_MENU_SCENE_H
 
-#include "scene_manager.h"
+#include "../scene_manager.h"
 
 class MainMenuScene : public Scene {
 	SFW_OBJECT(MainMenuScene, Scene);

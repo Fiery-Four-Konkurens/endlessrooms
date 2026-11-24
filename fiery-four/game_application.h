@@ -3,8 +3,8 @@
 
 #include "sfw.h"
 
-#include "main_menu_scene.h"
-#include "scene_manager.h"
+#include "scene/scene_manager.h"
+#include "scene/scenes/main_menu_scene.h"
 
 class GameApplication : public Application {
 	SFW_OBJECT(GameApplication, Application);

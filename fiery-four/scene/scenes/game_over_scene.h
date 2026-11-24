@@ -1,7 +1,7 @@
 #ifndef GAME_OVER_SCENE_H
 #define GAME_OVER_SCENE_H
 
-#include "scene_manager.h"
+#include "../scene_manager.h"
 
 class GameOverScene : public Scene {
 	SFW_OBJECT(GameOverScene, Scene);
