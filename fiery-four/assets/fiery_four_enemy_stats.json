@@ -1,0 +1,227 @@
+{
+  "game": "Fiery Four",
+  "enemies": [
+    {
+      "name": "Hellbat",
+      "tier": 1,
+      "hp": 30,
+      "speed_px_per_sec": 180,
+      "attacks_per_sec": 1.8,
+      "damage": 5
+    },
+    {
+      "name": "Eyeball Monster",
+      "tier": 1,
+      "hp": 40,
+      "speed_px_per_sec": 110,
+      "attacks_per_sec": 1.2,
+      "damage": 7
+    },
+    {
+      "name": "Ghostfire",
+      "tier": 1,
+      "hp": 45,
+      "speed_px_per_sec": 120,
+      "attacks_per_sec": 1.0,
+      "damage": 9
+    },
+    {
+      "name": "Demoness_A",
+      "tier": 1,
+      "hp": 55,
+      "speed_px_per_sec": 140,
+      "attacks_per_sec": 1.5,
+      "damage": 8
+    },
+    {
+      "name": "Demon_A",
+      "tier": 1,
+      "hp": 70,
+      "speed_px_per_sec": 110,
+      "attacks_per_sec": 1.2,
+      "damage": 10
+    },
+    {
+      "name": "Demoness_B",
+      "tier": 2,
+      "hp": 95,
+      "speed_px_per_sec": 135,
+      "attacks_per_sec": 1.5,
+      "damage": 13
+    },
+    {
+      "name": "Demon_C",
+      "tier": 2,
+      "hp": 110,
+      "speed_px_per_sec": 145,
+      "attacks_per_sec": 1.4,
+      "damage": 14
+    },
+    {
+      "name": "Blood-Monster_B",
+      "tier": 2,
+      "hp": 125,
+      "speed_px_per_sec": 120,
+      "attacks_per_sec": 1.6,
+      "damage": 13
+    },
+    {
+      "name": "Hellhound",
+      "tier": 2,
+      "hp": 140,
+      "speed_px_per_sec": 175,
+      "attacks_per_sec": 1.3,
+      "damage": 16
+    },
+    {
+      "name": "Demon_B",
+      "tier": 2,
+      "hp": 160,
+      "speed_px_per_sec": 95,
+      "attacks_per_sec": 1.1,
+      "damage": 20
+    },
+    {
+      "name": "Blood-Monster_A",
+      "tier": 3,
+      "hp": 190,
+      "speed_px_per_sec": 110,
+      "attacks_per_sec": 1.2,
+      "damage": 22
+    },
+    {
+      "name": "Demon_E",
+      "tier": 3,
+      "hp": 210,
+      "speed_px_per_sec": 120,
+      "attacks_per_sec": 1.3,
+      "damage": 24
+    },
+    {
+      "name": "Black-Knight_C",
+      "tier": 3,
+      "hp": 250,
+      "speed_px_per_sec": 105,
+      "attacks_per_sec": 1.1,
+      "damage": 28
+    },
+    {
+      "name": "Warlock",
+      "tier": 3,
+      "hp": 260,
+      "speed_px_per_sec": 100,
+      "attacks_per_sec": 0.9,
+      "damage": 35
+    },
+    {
+      "name": "Demon_D",
+      "tier": 3,
+      "hp": 290,
+      "speed_px_per_sec": 90,
+      "attacks_per_sec": 1.0,
+      "damage": 32
+    },
+    {
+      "name": "Black-Knight_A",
+      "tier": 4,
+      "hp": 450,
+      "speed_px_per_sec": 95,
+      "attacks_per_sec": 1.0,
+      "damage": 40
+    },
+    {
+      "name": "Black-Knight_B",
+      "tier": 4,
+      "hp": 550,
+      "speed_px_per_sec": 80,
+      "attacks_per_sec": 0.85,
+      "damage": 50
+    },
+    {
+      "name": "Minotaur",
+      "tier": 4,
+      "hp": 700,
+      "speed_px_per_sec": 115,
+      "attacks_per_sec": 0.75,
+      "damage": 65
+    },
+    {
+      "name": "Lava Slime",
+      "tier": 4,
+      "hp": 800,
+      "speed_px_per_sec": 65,
+      "attacks_per_sec": 0.6,
+      "damage": 55
+    },
+    {
+      "name": "Flame-Golem",
+      "tier": 5,
+      "hp": 2000,
+      "speed_px_per_sec": 60,
+      "attacks_per_sec": 0.6,
+      "damage": 100
+    }
+  ],
+  "tier_distance_intervals": [
+    {
+      "tier": 1,
+      "min_distance": 1,
+      "max_distance": 4,
+      "spawn_percentage_by_tier": {
+        "tier_1": 90,
+        "tier_2": 10,
+        "tier_3": 0,
+        "tier_4": 0,
+        "tier_5": 0
+      }
+    },
+    {
+      "tier": 2,
+      "min_distance": 5,
+      "max_distance": 9,
+      "spawn_percentage_by_tier": {
+        "tier_1": 25,
+        "tier_2": 75,
+        "tier_3": 0,
+        "tier_4": 0,
+        "tier_5": 0
+      }
+    },
+    {
+      "tier": 3,
+      "min_distance": 10,
+      "max_distance": 16,
+      "spawn_percentage_by_tier": {
+        "tier_1": 5,
+        "tier_2": 20,
+        "tier_3": 75,
+        "tier_4": 0,
+        "tier_5": 0
+      }
+    },
+    {
+      "tier": 4,
+      "min_distance": 17,
+      "max_distance": 25,
+      "spawn_percentage_by_tier": {
+        "tier_1": 0,
+        "tier_2": 5,
+        "tier_3": 15,
+        "tier_4": 80,
+        "tier_5": 0
+      }
+    },
+    {
+      "tier": 5,
+      "min_distance": 26,
+      "max_distance": null,
+      "spawn_percentage_by_tier": {
+        "tier_1": 0,
+        "tier_2": 5,
+        "tier_3": 10,
+        "tier_4": 45,
+        "tier_5": 40
+      }
+    }
+  ]
+}
