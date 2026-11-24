@@ -1,0 +1,8 @@
+A game_application saját scene_manager példányt hoz létre és a konstruktorában beállítja a main_menu_scene-t aktuális scene-kénte
+zért az első scene-kezelő hívások már a főmenüre jutnak
+
+A game_application update, render és input_event függvényei továbbítják a hívásokat a managernek,
+ mely az aktuális scene megfelelő függvényét hívja meg
+
+pause menünél egy külön Ref<Scene> megtarthatja a game_scene-t és az állapotát meaning nem veszik el a progress
+(it's just theory, some real testing needed)

@@ -1,15 +1,20 @@
 #include "game_scene.h"
+#include "main_menu_scene.h"
+#include "pause_menu_scene.h"
 
-GameScene::GameScene() {
-	state = GameState::MainMenu;
-
-	Renderer::initialize();
-	GUI::initialize();
+GameScene::GameScene(SceneManager &p_scene_manager) :
+		scene_manager(p_scene_manager) {
 }
 
-GameScene::~GameScene() {
-	GUI::destroy();
-	Renderer::destroy();
+void GameScene::input_event(const Ref<InputEvent> &p_event) {
+	Ref<InputEventKey> key = p_event;
+	if (key.is_valid() && key->is_pressed() && !key->is_echo() && key->get_scancode() == KEY_P) {
+		scene_manager.pause_game(Ref<Scene>(memnew(PauseMenuScene(scene_manager))));
+	}
+}
+
+void GameScene::update(float p_delta) {
+	elapsed_seconds += p_delta;
 }
 
 void GameScene::render() {
@@ -27,34 +32,16 @@ void GameScene::render() {
 
 	ImGui::TextUnformatted("FIERY FOUR");
 	ImGui::Separator();
+	ImGui::Text("Jatekido: %02d:%02d",
+			static_cast<int>(elapsed_seconds) / 60,
+			static_cast<int>(elapsed_seconds) % 60);
+	ImGui::TextUnformatted("Nyomd meg a P gombot a szunethez.");
 
-	if(state == GameState::GameOver) {
-		ImGui::TextUnformatted("A jatek veget ert!");
-		if(ImGui::Button("Vissza a fomenube", ImVec2(-1.0f, 44.0f))){
-			state = GameState::MainMenu;
-		}
-		if (ImGui::Button("Exit", ImVec2(-1.0f, 44.0f))) {
-			Application::get_singleton()->running = false;
-		}
+	if (ImGui::Button("Szunet", ImVec2(-1.0f, 44.0f))) {
+		scene_manager.pause_game(Ref<Scene>(memnew(PauseMenuScene(scene_manager))));
 	}
-	else if (state == GameState::Playing) {
-		ImGui::TextUnformatted("A jatek elindult!");
-		if (ImGui::Button("Vissza a fomenube", ImVec2(-1.0f, 44.0f))) {
-			state = GameState::MainMenu;
-		}
-		if(ImGui::Button("Jatek vege", ImVec2(-1.0f, 44.0f))){
-			state = GameState::GameOver;
-		}
-	} else {
-		if (ImGui::Button("Start", ImVec2(-1.0f, 44.0f))) {
-			state = GameState::Playing;
-		}
-		if(ImGui::Button("Jatek vege", ImVec2(-1.0f, 44.0f))){
-			state = GameState::GameOver;
-		}
-		if (ImGui::Button("Exit", ImVec2(-1.0f, 44.0f))) {
-			Application::get_singleton()->running = false;
-		}
+	if (ImGui::Button("Vissza a fomenube", ImVec2(-1.0f, 44.0f))) {
+		scene_manager.change_scene(Ref<Scene>(memnew(MainMenuScene(scene_manager))));
 	}
 
 	ImGui::End();
