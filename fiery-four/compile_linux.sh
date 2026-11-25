@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 echo "Compiling for Linux..."
 
@@ -13,7 +14,15 @@ ccache g++ -Wall -g -c ./scene/scenes/main_menu_scene.cpp -o ./build/main_menu_s
 ccache g++ -Wall -g -c ./scene/scenes/game_scene.cpp -o ./build/game_scene.o
 ccache g++ -Wall -g -c ./scene/scenes/pause_menu_scene.cpp -o ./build/pause_menu_scene.o
 ccache g++ -Wall -g -c ./scene/scenes/game_over_scene.cpp -o ./build/game_over_scene.o
+ccache g++ -Wall -g -c ./mapgen/map_generator.cpp -o ./build/map_generator.o
 ccache g++ -Wall -g -c main.cpp -o ./build/main.o
 
-ccache g++ -Wall -static-libgcc -static-libstdc++ -g ./build/sfw.o ./build/main_menu_scene.o ./build/game_scene.o ./build/pause_menu_scene.o ./build/game_over_scene.o ./build/main.o -lX11 -o game
-
+ccache g++ -Wall -static-libgcc -static-libstdc++ -g \
+    ./build/sfw.o \
+    ./build/main_menu_scene.o \
+    ./build/game_scene.o \
+    ./build/pause_menu_scene.o \
+    ./build/game_over_scene.o \
+    ./build/map_generator.o \
+    ./build/main.o \
+    -lX11 -o game
