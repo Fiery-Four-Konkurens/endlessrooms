@@ -1,7 +1,12 @@
 #include "game_scene.h"
 #include "pause_menu_scene.h"
+#include "../../common/Random.h"
 
-GameScene::GameScene(SceneManager &p_scene_manager) : scene_manager(p_scene_manager) {
+GameScene::GameScene(SceneManager &p_scene_manager)
+	: scene_manager(p_scene_manager),
+	  seed(Random::generateWorldSeed()),
+	  map_generator(seed) {
+
 	font = Ref<Font>(memnew(Font));
 	font->load_default(32.0f);
 
@@ -54,7 +59,7 @@ void GameScene::input_event(const Ref<InputEvent> &p_event) {
 }
 
 void GameScene::update(float p_delta) {
-	elapsed_seconds += p_delta;
+	elapsed_seconds += AppWindow::get_singleton()->get_delta();
 }
 
 //TODO actual game render. Jelenlegit minimapként jó lesz felhasználni.
@@ -217,24 +222,6 @@ void GameScene::render() {
 						room_size - 2 * border_width,
 						room_size - 2 * border_width),
 				color);
-
-		// Enemy count.
-
-		if (font.is_valid()) {
-			const String text =
-					String::num_int64(room.enemy_count);
-
-			const Vector2 text_size =
-					font->get_string_size(text);
-
-			renderer->draw_text_2d(
-					text,
-					font,
-					Vector2(
-							cx - text_size.x / 2.0f,
-							cy - text_size.y / 2.0f),
-					text_color);
-		}
 	}
 }
 
@@ -246,8 +233,10 @@ void GameScene::enter_room(Coords coords) {
 
 	current_coords = coords;
 
-	if (!room->visited)
+	if (!room->visited) {
 		map_generator.generateNeighbours(map, coords);
+		map.getptr(current_coords)->visited = 1;
+	}
 }
 
 bool GameScene::move_to(Direction dir) {

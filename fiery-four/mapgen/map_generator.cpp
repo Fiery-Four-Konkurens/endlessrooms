@@ -3,11 +3,15 @@
 //
 
 #include "map_generator.h"
-#include "../common/Random.h"
 
 namespace
 {
-    constexpr Coords offsets[4] =
+	constexpr unsigned int DOOR_CHANCE = 55;
+	constexpr unsigned int MIN_ENEMIES = 1; // FIT IN 3 BITS!
+	constexpr unsigned int MAX_ENEMIES = 7;
+	constexpr unsigned int DIRECTION_COUNT = 4;
+
+    constexpr Coords offsets[DIRECTION_COUNT] =
     {
         { 1,  0}, // RIGHT
         {-1,  0}, // LEFT
@@ -21,13 +25,9 @@ namespace
     }
 }
 
-unsigned int MapGenerator::random(unsigned int& seed)
+MapGenerator::MapGenerator(unsigned int seed)
+    : random(seed)
 {
-    seed ^= seed << 13;
-    seed ^= seed >> 17;
-    seed ^= seed << 5;
-
-    return seed;
 }
 
 void MapGenerator::generateRoom(void* arg)
@@ -40,8 +40,10 @@ void MapGenerator::generateRoom(void* arg)
 
     Room room{};
 
+	Random random(task.seed);
+
     // Generate doors.
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < DIRECTION_COUNT; ++i)
     {
         Direction dir = static_cast<Direction>(i);
         unsigned int bit = 1u << i;
@@ -52,12 +54,12 @@ void MapGenerator::generateRoom(void* arg)
         }
         else
         {
-        	room.setDoor(dir, (random(task.seed) % 100u) < 55u); // 55% ajtó esély => 75% hogy végtelen a pálya. Ha nagyobb akkor túl rácsos lesz
+        	room.setDoor(dir, random.chance(DOOR_CHANCE));
         }
     }
 
     // Generate 1-7 enemies.
-    room.enemy_count = 1 + random(task.seed) % 7u;
+    room.enemy_count = random.range(MIN_ENEMIES, MAX_ENEMIES);
     room.visited = 0;
 
     task.result = room;
@@ -69,15 +71,15 @@ void MapGenerator::generateNeighbours(
 {
     const Room* current = map.getptr(coords);
 
-    if (!current || current->visited)
+    if (!current)
         return;
 
-    GenerationTask tasks[4]{};
-    Thread threads[4];
+    GenerationTask tasks[DIRECTION_COUNT]{};
+    Thread threads[DIRECTION_COUNT];
 
     // PHASE 1: Prepare tasks.
 
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < DIRECTION_COUNT; ++i)
     {
         Direction dir = static_cast<Direction>(i);
         GenerationTask& task = tasks[i];
@@ -94,13 +96,10 @@ void MapGenerator::generateNeighbours(
 
         task.required = true;
 
-        task.seed = Coords::hash(task.coords) ^ Random::generateWorldSeed();
-
-        if (task.seed == 0)
-            task.seed = 1;
+        task.seed = Coords::hash(task.coords) ^ random.next();
 
         // Check all existing neighbours of the new room.
-        for (unsigned int j = 0; j < 4; ++j)
+        for (unsigned int j = 0; j < DIRECTION_COUNT; ++j)
         {
             Coords adjacent = task.coords + offsets[j];
 
@@ -123,7 +122,7 @@ void MapGenerator::generateNeighbours(
 
     // PHASE 2: Start worker threads.
 
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < DIRECTION_COUNT; ++i)
     {
         if (tasks[i].required)
             threads[i].start(generateRoom, &tasks[i]);
@@ -131,7 +130,7 @@ void MapGenerator::generateNeighbours(
 
     // PHASE 3: Synchronize.
 
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < DIRECTION_COUNT; ++i)
     {
         if (tasks[i].required)
             threads[i].wait_to_finish();
@@ -139,11 +138,10 @@ void MapGenerator::generateNeighbours(
 
     // PHASE 4: Insert generated rooms.
 
-    for (unsigned int i = 0; i < 4; ++i)
+    for (unsigned int i = 0; i < DIRECTION_COUNT; ++i)
     {
         if (tasks[i].required)
             map.insert(tasks[i].coords, tasks[i].result);
     }
-	map.get(coords).visited = 1;
 
 }

@@ -22,10 +22,13 @@ public:
 private:
 	SceneManager &scene_manager;
 
+	unsigned int seed;
 	MapGenerator map_generator;
+
 	HashMap<Coords, Room, Coords> map;
 
 	Ref<Font> font;
+
 
 	Coords current_coords{0, 0};
 

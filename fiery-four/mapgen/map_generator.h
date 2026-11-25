@@ -6,11 +6,14 @@
 
 #include "../common/Coords.h"
 #include "../common/Room.h"
+#include "../common/Random.h"
 #include "../sfw.h"
 
 class MapGenerator
 {
 public:
+	explicit MapGenerator(unsigned int seed);
+
 	void generateNeighbours(
 		HashMap<Coords, Room, Coords>& map,
 		Coords coords
@@ -32,7 +35,7 @@ private:
 
 	static void generateRoom(void* arg);
 
-	static unsigned int random(unsigned int& state);
+	Random random;
 };
 
 #endif
